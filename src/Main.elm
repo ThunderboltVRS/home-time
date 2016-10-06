@@ -184,16 +184,39 @@ subscriptions model =
 homeSvg : Html.Html Msg
 homeSvg =
     Html.div []
-        [ Svg.svg [ attribute "height" "350px", viewBox "0 0 500 500", attribute "width" "500px", attribute "xmlns" "http://www.w3.org/2000/svg", attribute "xmlns:xlink" "http://www.w3.org/1999/xlink" ]
-            [ Svg.path [ d "M76.403,450.517c0,0-0.412,10.62,9.967,10.62c12.923,0,119.849-0.138,119.849-0.138l0.189-98.212c0,0-1.701-16.188,14.023-16.188h49.733c18.577,0,17.426,16.188,17.426,16.188l-0.206,97.903c0,0,101.392,0,117.322,0c13.181,0,12.579-13.232,12.579-13.232V266.396L251.948,119.31L76.403,266.396V450.517z", fill "#010101", Svg.Attributes.id "path-0" ]
+        [ Svg.svg
+            [ attribute "height" "350px"
+            , viewBox "0 0 500 500"
+            , attribute "width" "500px"
+            , attribute "xmlns" "http://www.w3.org/2000/svg"
+            , attribute "xmlns:xlink" "http://www.w3.org/1999/xlink"
+            ]
+            [ Svg.path
+                [ d "M76.403,450.517c0,0-0.412,10.62,9.967,10.62c12.923,0,119.849-0.138,119.849-0.138l0.189-98.212c0,0-1.701-16.188,14.023-16.188h49.733c18.577,0,17.426,16.188,17.426,16.188l-0.206,97.903c0,0,101.392,0,117.322,0c13.181,0,12.579-13.232,12.579-13.232V266.396L251.948,119.31L76.403,266.396V450.517z"
+                , fill "#010101"
+                , Svg.Attributes.id "path-0"
+                ]
                 []
-            , Svg.path [ d "M11.753,252.7c0,0,14.917,27.479,47.414,0L253.409,88.377l182.109,163.309c37.636,27.136,51.728,0,51.728,0L253.409,39.863L11.753,252.7z", fill "#010101", Svg.Attributes.id "path-1", attribute "style" "position: relative;" ]
+            , Svg.path
+                [ d "M11.753,252.7c0,0,14.917,27.479,47.414,0L253.409,88.377l182.109,163.309c37.636,27.136,51.728,0,51.728,0L253.409,39.863L11.753,252.7z"
+                , fill "#010101"
+                , Svg.Attributes.id "path-1"
+                , attribute "style" "position: relative;"
+                ]
                 []
             , Svg.node "polygon"
-                [ fill "#010101", attribute "points" "431.103,87.981 384.256,87.981 384.462,144.795 431.103,184.372 " ]
+                [ fill "#010101"
+                , attribute "points" "431.103,87.981 384.256,87.981 384.462,144.795 431.103,184.372 "
+                ]
                 []
             , Svg.node "circle"
-                [ attribute "cx" "245.923", attribute "cy" "305.658", fill "#FFFFFF", Svg.Attributes.id "circle-0", attribute "r" "25.641", attribute "style" "position: relative;" ]
+                [ attribute "cx" "245.923"
+                , attribute "cy" "305.658"
+                , fill "#FFFFFF"
+                , Svg.Attributes.id "circle-0"
+                , attribute "r" "25.641"
+                , attribute "style" "position: relative;"
+                ]
                 []
             ]
         ]
