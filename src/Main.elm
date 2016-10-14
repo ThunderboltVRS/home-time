@@ -25,13 +25,13 @@ type Msg
 
 homeHour : Int
 homeHour =
-    17
+    19
 
 
 homeMinute : Int
 homeMinute =
-    30
-
+    53
+    
 
 main : Program Never
 main =
@@ -119,9 +119,27 @@ timeTextFromDelta delta =
         ]
 
 
+correctDelta : Date.Extra.Duration.DeltaRecord -> Date.Extra.Duration.DeltaRecord
+correctDelta delta =
+    if (delta.hour >= 0 && delta.minute >= 0 && delta.second >= 0) then
+        delta
+        -- doesnt affect poistive date
+    else if (delta.minute < 0 && delta.second > 0) then
+        { delta | minute = delta.minute + 1, second = -60 + delta.second }
+    else if (delta.minute > 0) then
+        { delta | hour = delta.hour + 1, minute = 59, second = delta.second }
+    else
+        delta
+
+
 isHomeTime : Date.Extra.Duration.DeltaRecord -> Bool
 isHomeTime delta =
     (delta.hour >= 0 && delta.minute >= 0 && delta.second >= 0)
+
+
+isCountdown : Date.Extra.Duration.DeltaRecord -> Bool
+isCountdown delta =
+    (delta.hour >= 0 && delta.minute >= 0 && delta.second >= -30)
 
 
 view : Model -> Html.Html Msg
@@ -165,9 +183,18 @@ contentElements model =
             case model.endOfDay of
                 Just b ->
                     if (isHomeTime (getDiff a b)) then
-                        [ div [] [ Html.text "It's Home Time!!!" ], div [] [ homeSvg ], ("+ " ++ ((getDiff a b) |> timeTextFromDelta) |> Html.text) ]
+                        [ div [] [ Html.text "It's Home Time!!!" ]
+                        , div [] [ homeSvg ]
+                        , ("+ " ++ ((getDiff a b) |> correctDelta |> timeTextFromDelta) |> Html.text)
+                        ]
+                    else if (isCountdown (getDiff a b)) then
+                        [ div []
+                            [ div [] [ (("- " ++ ((getDiff a b) |> correctDelta |> timeTextFromDelta)) |> Html.text) ]
+                            , div [] [ countdownClock (getDiff a b) ]
+                            ]
+                        ]
                     else
-                        [ (("- " ++ ((getDiff a b) |> timeTextFromDelta)) |> Html.text) ]
+                        [ (("- " ++ ((getDiff a b) |> correctDelta |> timeTextFromDelta)) |> Html.text) ]
 
                 Nothing ->
                     []
@@ -220,3 +247,21 @@ homeSvg =
                 []
             ]
         ]
+
+
+countdownClock : Date.Extra.Duration.DeltaRecord -> Html.Html Msg
+countdownClock delta =
+    let
+        angle =
+            turns (toFloat ( delta.second + 15) / 60)
+
+        handX =
+            toString (50 + 40 * cos angle)
+
+        handY =
+            toString (50 + 40 * sin angle)
+    in
+        Svg.svg [ viewBox "0 0 100 100", Svg.Attributes.width "300px" ]
+            [ circle [ cx "50", cy "50", r "45", fill "#010101", opacity "0.4" ] []
+            , line [ x1 "50", y1 "50", x2 handX, y2 handY, stroke "#010101", opacity "0.8" ] []
+            ]
