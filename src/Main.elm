@@ -25,12 +25,12 @@ type Msg
 
 homeHour : Int
 homeHour =
-    19
+    7
 
 
 homeMinute : Int
 homeMinute =
-    53
+    30
     
 
 main : Program Never
