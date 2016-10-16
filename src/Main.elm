@@ -25,7 +25,7 @@ type Msg
 
 homeHour : Int
 homeHour =
-    7
+    17
 
 
 homeMinute : Int
@@ -190,11 +190,15 @@ contentElements model =
                     else if (isCountdown (getDiff a b)) then
                         [ div []
                             [ div [] [ (("- " ++ ((getDiff a b) |> correctDelta |> timeTextFromDelta)) |> Html.text) ]
-                            , div [] [ countdownClock (getDiff a b) ]
+                            , div [] [ countdownClock (getDiff a b).second ]
                             ]
                         ]
                     else
-                        [ (("- " ++ ((getDiff a b) |> correctDelta |> timeTextFromDelta)) |> Html.text) ]
+                        [ div []
+                            [ (("- " ++ ((getDiff a b) |> correctDelta |> timeTextFromDelta)) |> Html.text) ]
+                            -- , div [] [ countdownClock (getDiff a b).second ] Testing
+                        ]
+                        
 
                 Nothing ->
                     []
@@ -249,11 +253,11 @@ homeSvg =
         ]
 
 
-countdownClock : Date.Extra.Duration.DeltaRecord -> Html.Html Msg
-countdownClock delta =
+countdownClock : Int -> Html.Html Msg
+countdownClock seconds =
     let
         angle =
-            turns (toFloat ( delta.second + 15) / 60)
+            turns (toFloat ( seconds + 15) / 60)
 
         handX =
             toString (50 + 40 * cos angle)
