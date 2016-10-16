@@ -112,9 +112,9 @@ timeTextFromDelta delta =
     String.concat
         [ toString (abs delta.hour)
         , " Hours "
-        , (toString (abs delta.minute))
+        , (doubleDigit (abs delta.minute))
         , " Minutes "
-        , (toString (abs delta.second))
+        , (doubleDigit (abs delta.second))
         , " Seconds "
         ]
 
@@ -206,6 +206,13 @@ contentElements model =
         Nothing ->
             []
 
+
+doubleDigit : Int -> String
+doubleDigit value = 
+    if (value < 10) then
+        "0" ++ toString value
+    else
+        toString value
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
